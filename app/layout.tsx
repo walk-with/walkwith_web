@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import { QueryClientProvider } from "react-query";
+import { Header } from "../components/main/Header";
 import { queryClient } from "../src/react-query/queryClient";
 
 interface MainLayoutProps {
@@ -14,7 +15,8 @@ export default function Layout({ children }: MainLayoutProps): ReactNode {
       <head />
       <body>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <Header />
+          <div className="">{children}</div>
         </QueryClientProvider>
       </body>
     </html>
