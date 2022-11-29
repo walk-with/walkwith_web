@@ -15,8 +15,7 @@ export default function Layout({ children }: MainLayoutProps): ReactNode {
       <head />
       <body>
         <QueryClientProvider client={queryClient}>
-          <Header />
-          <div className="">{children}</div>
+          {children}
         </QueryClientProvider>
       </body>
     </html>
