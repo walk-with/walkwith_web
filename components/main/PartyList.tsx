@@ -1,12 +1,10 @@
-"use client";
-
-import { FC } from "react";
-import { getParties } from "../../api/getParties";
 import Image from "next/image";
-import { useQuery } from "react-query";
+import { FC, use } from "react";
+import { getParties } from "../../api/getParties";
 
 export const PartyList: FC = () => {
-  const { data } = useQuery("parties", getParties);
+  const data = use(getParties());
+
   return (
     <div>
       <p>주변 산책 리스트</p>
