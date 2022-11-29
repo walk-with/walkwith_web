@@ -21,12 +21,16 @@ export const Map = () => {
     });
   }, [myPos]);
 
-  if (!myPos)
-    return (
-      <div className="w-screen h-60 flex justify-center items-center">
-        LOADING
-      </div>
-    );
+  //   if (!myPos)
+  //     return (
+  //       <div className="w-screen h-60 flex justify-center items-center">
+  //         LOADING
+  //       </div>
+  //     );
 
-  return <div id="map" className="w-screen h-60" />;
+  return (
+    <div id="map" className="w-screen h-60">
+      LOADING
+    </div>
+  );
 };

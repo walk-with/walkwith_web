@@ -1,5 +1,4 @@
-import classNames from "classnames";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { MenuIcon, SearchIcon } from "../../assets/icons";
 
 export const Header: FC = () => {

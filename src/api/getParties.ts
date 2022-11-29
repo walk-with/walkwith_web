@@ -1,4 +1,4 @@
-import { Party } from "../types";
+import { Party } from "../../types";
 
 export const getParties = () => {
   const url = new URL(process.env.NEXT_PUBLIC_API_BASE_URL!);
