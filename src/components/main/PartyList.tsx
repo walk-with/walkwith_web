@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 import { Party } from "../../../types";
 
@@ -11,8 +12,12 @@ export const PartyList: FC<PartyListProps> = ({ parties = [] }) => {
   return (
     <div>
       <p>주변 산책 리스트</p>
-      {parties.map((party) => (
-        <div key={party.id} className="flex justify-between p-2">
+      {parties?.map((party) => (
+        <Link
+          href={`parties/${party.id}`}
+          key={party.id}
+          className="flex justify-between p-2"
+        >
           <Image
             src={"/person.svg"}
             width={30}
@@ -31,7 +36,7 @@ export const PartyList: FC<PartyListProps> = ({ parties = [] }) => {
             </div>
           </div>
           <div>{party.startAt}</div>
-        </div>
+        </Link>
       ))}
     </div>
   );
