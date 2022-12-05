@@ -1,14 +1,17 @@
+"use client";
 import Image from "next/image";
-import { FC, use } from "react";
-import { getParties } from "../../api/getParties";
+import { FC } from "react";
+import { Party } from "../../../types";
 
-export const PartyList: FC = () => {
-  const data = use(getParties());
+interface PartyListProps {
+  parties: Party[];
+}
 
+export const PartyList: FC<PartyListProps> = ({ parties = [] }) => {
   return (
     <div>
       <p>주변 산책 리스트</p>
-      {data?.map((party) => (
+      {parties.map((party) => (
         <div key={party.id} className="flex justify-between p-2">
           <Image
             src={"/person.svg"}
