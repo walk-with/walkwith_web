@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import { Header } from "../src/components/main/Header";
 import { Map } from "../src/components/main/Map";
-import { PartyList } from "../src/components/main/PartyList";
+import { PartyListTemplate } from "../src/components/main/PartyListTemplate";
 import "../styles/globals.css";
 
-export default function Main() {
+export default function MainPage() {
   return (
     <>
       <Header />
@@ -12,7 +12,7 @@ export default function Main() {
         <Map />
         {/* TODO: Skeleton */}
         <Suspense fallback={<div>LOADING LIST...</div>}>
-          <PartyList />
+          <PartyListTemplate />
         </Suspense>
       </div>
     </>
