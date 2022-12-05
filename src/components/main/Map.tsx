@@ -1,36 +1,23 @@
 "use client";
-import { FC, useEffect, useRef, useState } from "react";
+import { useAtom } from "jotai";
+import { FC, useEffect } from "react";
+import { useMap } from "../../hooks/useMap";
+import { positionAtom } from "../../stores/position";
 import { throttle } from "../../utils/throttle";
 
 // TODO : 네이버 맵 관련 타이핑 보완, LOADING 보완
-interface MapProps {
-  onChangeBounds: (map: any, bounds: any) => void;
-}
+interface MapProps {}
 
-export const Map: FC<MapProps> = ({ onChangeBounds }) => {
-  const mapRef = useRef();
+export const Map: FC<MapProps> = () => {
+  const [_, setPosition] = useAtom(positionAtom);
+
+  const { initializeMap, clearMap } = useMap({
+    targetElementId: "map",
+    onChangeBounds: throttle(console.log, 500),
+    onLoad: console.log,
+  });
 
   useEffect(() => {
-    const initializeMap = (latitude: number, longitude: number) => {
-      mapRef.current = new window.naver.maps.Map("map", {
-        center: new window.naver.maps.LatLng(latitude, longitude),
-        zoomControl: false,
-      });
-
-      if (typeof onChangeBounds === "function") {
-        const listener = throttle(function (bounds: any) {
-          console.log({ CurrentBounds: bounds });
-          onChangeBounds(mapRef.current, bounds);
-        }, 500);
-
-        window.naver.maps.Event.addListener(
-          mapRef.current,
-          "bounds_changed",
-          listener
-        );
-      }
-    };
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords || {};
@@ -38,25 +25,20 @@ export const Map: FC<MapProps> = ({ onChangeBounds }) => {
       },
       (error) => {
         const SEOUL_CITYHALL_POSITION: [number, number] = [37.33, 126.58];
-
-        if (error.code == error.PERMISSION_DENIED) {
-          console.log("Geolocation: Permission Denied!");
-        }
-
         initializeMap.apply(null, SEOUL_CITYHALL_POSITION);
+
+        console.error(error);
       }
     );
-  }, [onChangeBounds]);
 
-  //   if (!myPos)
-  //     return (
-  //       <div className="w-screen h-60 flex justify-center items-center">
-  //         LOADING
-  //       </div>
-  //     );
+    return clearMap;
+  }, [setPosition, initializeMap, clearMap]);
 
   return (
-    <div id="map" className="w-screen h-60">
+    <div
+      id="map"
+      className="w-screen h-60 flex justify-center items-center outline-none"
+    >
       LOADING
     </div>
   );
