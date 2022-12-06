@@ -2,7 +2,6 @@
 
 import { ReactNode } from "react";
 import { QueryClientProvider } from "react-query";
-import { Header } from "../src/components/main/Header";
 import { queryClient } from "../src/react-query/queryClient";
 
 interface MainLayoutProps {

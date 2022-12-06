@@ -1,5 +1,4 @@
-import { atom } from "jotai";
-import { Context, createContext, Suspense } from "react";
+import { Suspense } from "react";
 import { Header } from "./Header";
 import { Map } from "./Map";
 import { PartyListTemplate } from "./PartyListTemplate";
