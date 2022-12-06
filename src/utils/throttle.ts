@@ -1,7 +1,7 @@
-export const throttle = (callback: (arg: any) => void, delay: number) => {
+export const throttle = (callback: (...arg: any) => void, delay: number) => {
   let timeout: NodeJS.Timeout;
-  return (...arg: any[]) => {
+  return (...arg: any) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => callback(arg), delay);
+    timeout = setTimeout(() => callback(...arg), delay);
   };
 };

@@ -1,10 +1,6 @@
-import { atom } from "jotai";
+import { atom, useAtom } from "jotai";
+import { LatLngBound } from "../../types/map";
 
-export interface Position {
-  _min: number;
-  _max: number;
-  _ne: number;
-  _sw: number;
-}
+const positionAtom = atom<LatLngBound | null>(null);
 
-export const positionAtom = atom<Position | null>(null);
+export const usePosition = () => useAtom(positionAtom);

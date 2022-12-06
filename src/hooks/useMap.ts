@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { LatLngBound } from "../../types/map";
 
 interface MapConfig {
@@ -10,6 +10,8 @@ export const useMap = (mapConfig: MapConfig) => {
   const mapRef = useRef<any>();
 
   const initializeMap = (latitude: number, longitude: number) => {
+    if (mapRef.current) return;
+
     mapRef.current = new window.naver.maps.Map(mapConfig.targetElementId, {
       center: new window.naver.maps.LatLng(latitude, longitude),
       zoomControl: false,
@@ -17,13 +19,13 @@ export const useMap = (mapConfig: MapConfig) => {
 
     // add map init event listener
     if (typeof mapConfig.onLoad === "function") {
-      window.naver.maps.Event.once(mapRef.current, "init", () =>
-        mapConfig.onLoad!(mapRef.current?.bounds)
-      );
+      window.naver.maps.Event.once(mapRef.current, "init", () => {
+        mapConfig.onLoad!(mapRef.current.bounds);
+      });
     }
 
     // add bounds changed event listener
-    if (mapConfig.onChangeBounds) {
+    if (typeof mapConfig.onChangeBounds === "function") {
       window.naver.maps.Event.addListener(
         mapRef.current,
         "bounds_changed",
@@ -32,9 +34,9 @@ export const useMap = (mapConfig: MapConfig) => {
     }
   };
 
-  const clearMap = () => {
+  const clearMap = useCallback(() => {
     mapRef.current?.destroy();
-  };
+  }, []);
 
   return {
     initializeMap,

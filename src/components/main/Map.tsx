@@ -1,21 +1,24 @@
 "use client";
-import { useAtom } from "jotai";
 import { FC, useEffect } from "react";
 import { useMap } from "../../hooks/useMap";
-import { positionAtom } from "../../stores/position";
+import { usePosition } from "../../stores/position";
 import { throttle } from "../../utils/throttle";
 
 // TODO : 네이버 맵 관련 타이핑 보완, LOADING 보완
 interface MapProps {}
 
 export const Map: FC<MapProps> = () => {
-  const [_, setPosition] = useAtom(positionAtom);
+  const [_, setPosition] = usePosition();
 
   const { initializeMap, clearMap } = useMap({
     targetElementId: "map",
-    onChangeBounds: throttle(console.log, 500),
-    onLoad: console.log,
+    onChangeBounds: throttle((b) => setPosition(b), 500),
+    onLoad: setPosition,
   });
+
+  useEffect(() => {
+    return clearMap;
+  }, [clearMap]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -30,9 +33,7 @@ export const Map: FC<MapProps> = () => {
         console.error(error);
       }
     );
-
-    return clearMap;
-  }, [setPosition, initializeMap, clearMap]);
+  }, [initializeMap]);
 
   return (
     <div
