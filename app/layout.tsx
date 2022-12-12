@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 import { QueryClientProvider } from "react-query";
 import { queryClient } from "../src/react-query/queryClient";
+import "../styles/globals.css";
 
 interface MainLayoutProps {
   children: ReactNode;
