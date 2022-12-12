@@ -2,7 +2,7 @@
 import { FC, useEffect } from "react";
 import { useMap } from "../../hooks/useMap";
 import { usePosition } from "../../stores/position";
-import { throttle } from "../../utils/throttle";
+import { debounce } from "../../utils/debounce";
 
 // TODO : 네이버 맵 관련 타이핑 보완, LOADING 보완
 interface MapProps {}
@@ -12,7 +12,7 @@ export const Map: FC<MapProps> = () => {
 
   const { initializeMap, clearMap } = useMap({
     targetElementId: "map",
-    onChangeBounds: throttle((b) => setPosition(b), 500),
+    onChangeBounds: debounce((b) => setPosition(b), 500),
     onLoad: setPosition,
   });
 
