@@ -1,5 +1,10 @@
 export interface Dog {
+  id: string;
   name: string;
+  birthYear: number;
+  weight: number;
+  sex: number;
+  tags: string[];
 }
 
 export interface Party {
@@ -7,6 +12,6 @@ export interface Party {
   name: string;
   tags: string[];
   startAt: string;
-  srcUrl: string;
   host: Dog;
+  attendees: Dog[];
 }
