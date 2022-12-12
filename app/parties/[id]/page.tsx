@@ -1,4 +1,5 @@
 import { getParties } from "../../../src/api/getParties";
+import { PartyDetailPageTemplate } from "../../../src/components/parties/PartyDetailPageTemplate";
 
 export async function generateStaticParams() {
   const parties = await getParties();
@@ -10,5 +11,5 @@ export async function generateStaticParams() {
 
 export default function PartyDetailPage({ params }: any) {
   const { id } = params;
-  return <div>{`Party :${id}`}</div>;
+  return <PartyDetailPageTemplate />;
 }
