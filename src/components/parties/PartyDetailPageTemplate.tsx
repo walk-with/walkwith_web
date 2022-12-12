@@ -1,14 +1,21 @@
 "use client";
 
 import * as Tabs from "@radix-ui/react-tabs";
+import { FC } from "react";
 import { PartiesPageHearder } from "./Header";
+import { PartyInformationTemplate } from "./PartyInformationTemplate";
 
 enum PartyDetailTab {
   INFORMATION = "information",
   CHAT = "chat",
 }
 
-export const PartyDetailPageTemplate = () => {
+interface PartyDetailPageTemplateProps {
+  partyId: string;
+}
+export const PartyDetailPageTemplate: FC<PartyDetailPageTemplateProps> = ({
+  partyId,
+}) => {
   return (
     <>
       <PartiesPageHearder />
@@ -31,7 +38,9 @@ export const PartyDetailPageTemplate = () => {
               채팅
             </Tabs.Trigger>
           </Tabs.List>
-          <Tabs.Content value={PartyDetailTab.INFORMATION}></Tabs.Content>
+          <Tabs.Content value={PartyDetailTab.INFORMATION}>
+            <PartyInformationTemplate partyId={partyId} />
+          </Tabs.Content>
           <Tabs.Content value={PartyDetailTab.CHAT}></Tabs.Content>
         </Tabs.Root>
       </div>

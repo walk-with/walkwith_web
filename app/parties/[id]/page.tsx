@@ -11,5 +11,5 @@ export async function generateStaticParams() {
 
 export default function PartyDetailPage({ params }: any) {
   const { id } = params;
-  return <PartyDetailPageTemplate />;
+  return <PartyDetailPageTemplate partyId={id} />;
 }
