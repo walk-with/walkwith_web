@@ -27,13 +27,13 @@ export const PartyDetailPageTemplate: FC<PartyDetailPageTemplateProps> = ({
           <Tabs.List className="flex">
             <Tabs.Trigger
               value={PartyDetailTab.INFORMATION}
-              className="flex-1 py-2 radixActive:border-b"
+              className="flex-1 py-2 dataActive:border-b"
             >
               상세 정보
             </Tabs.Trigger>
             <Tabs.Trigger
               value={PartyDetailTab.CHAT}
-              className="flex-1 py-2 radixActive:border-b"
+              className="flex-1 py-2 dataActive:border-b"
             >
               채팅
             </Tabs.Trigger>
