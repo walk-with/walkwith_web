@@ -1,36 +1,26 @@
 "use client";
-import { FC, useEffect, useRef, useState } from "react";
-import { throttle } from "../../utils/throttle";
+import { FC, useEffect } from "react";
+import { useMap } from "../../hooks/useMap";
+import { usePosition } from "../../stores/position";
+import { debounce } from "../../utils/debounce";
 
 // TODO : 네이버 맵 관련 타이핑 보완, LOADING 보완
-interface MapProps {
-  onChangeBounds: (map: any, bounds: any) => void;
-}
+interface MapProps {}
 
-export const Map: FC<MapProps> = ({ onChangeBounds }) => {
-  const mapRef = useRef();
+export const Map: FC<MapProps> = () => {
+  const [_, setPosition] = usePosition();
+
+  const { initializeMap, clearMap } = useMap({
+    targetElementId: "map",
+    onChangeBounds: debounce((b) => setPosition(b), 500),
+    onLoad: setPosition,
+  });
 
   useEffect(() => {
-    const initializeMap = (latitude: number, longitude: number) => {
-      mapRef.current = new window.naver.maps.Map("map", {
-        center: new window.naver.maps.LatLng(latitude, longitude),
-        zoomControl: false,
-      });
+    return clearMap;
+  }, [clearMap]);
 
-      if (typeof onChangeBounds === "function") {
-        const listener = throttle(function (bounds: any) {
-          console.log({ CurrentBounds: bounds });
-          onChangeBounds(mapRef.current, bounds);
-        }, 500);
-
-        window.naver.maps.Event.addListener(
-          mapRef.current,
-          "bounds_changed",
-          listener
-        );
-      }
-    };
-
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords || {};
@@ -38,25 +28,18 @@ export const Map: FC<MapProps> = ({ onChangeBounds }) => {
       },
       (error) => {
         const SEOUL_CITYHALL_POSITION: [number, number] = [37.33, 126.58];
-
-        if (error.code == error.PERMISSION_DENIED) {
-          console.log("Geolocation: Permission Denied!");
-        }
-
         initializeMap.apply(null, SEOUL_CITYHALL_POSITION);
+
+        console.error(error);
       }
     );
-  }, [onChangeBounds]);
-
-  //   if (!myPos)
-  //     return (
-  //       <div className="w-screen h-60 flex justify-center items-center">
-  //         LOADING
-  //       </div>
-  //     );
+  }, [initializeMap]);
 
   return (
-    <div id="map" className="w-screen h-60">
+    <div
+      id="map"
+      className="w-screen h-60 flex justify-center items-center outline-none"
+    >
       LOADING
     </div>
   );
