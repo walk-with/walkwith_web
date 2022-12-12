@@ -35,10 +35,14 @@ export const Avatar: FC<AvatarProps> = ({
 
   return (
     <div
+      data-state={isFocused ? "active" : null}
       className={classNames(
         "rounded-full",
         "bg-slate-400",
         "overflow-hidden",
+        "dataActive:border-solid",
+        "dataActive:border-4",
+        "dataActive:border-amber-400",
         twWidth[size],
         twHeight[size]
       )}
@@ -47,7 +51,6 @@ export const Avatar: FC<AvatarProps> = ({
         alt={alt}
         width={imgSize[size]}
         height={imgSize[size]}
-        data-state={isFocused ? "active" : null}
         {...imgProps}
         src="https://thumbs.dreamstime.com/b/beautiful-happy-reddish-havanese-puppy-dog-sitting-frontal-looking-camera-isolated-white-background-46868560.jpg"
       />

@@ -8,7 +8,7 @@ module.exports = {
   },
   plugins: [
     plugin(({ addVariant }) => {
-      addVariant("radixActive", '&[data-state="active"]');
+      addVariant("dataActive", '&[data-state="active"]');
     }),
   ],
 };
