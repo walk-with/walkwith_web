@@ -20,11 +20,14 @@ export const PartyDetailPageTemplate = () => {
           <Tabs.List className="flex">
             <Tabs.Trigger
               value={PartyDetailTab.INFORMATION}
-              className="flex-1 py-2"
+              className="flex-1 py-2 radixActive:border-b"
             >
               상세 정보
             </Tabs.Trigger>
-            <Tabs.Trigger value={PartyDetailTab.CHAT} className="flex-1 py-2">
+            <Tabs.Trigger
+              value={PartyDetailTab.CHAT}
+              className="flex-1 py-2 radixActive:border-b"
+            >
               채팅
             </Tabs.Trigger>
           </Tabs.List>
